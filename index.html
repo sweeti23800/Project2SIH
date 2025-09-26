@@ -12,7 +12,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <h2>🏥 Episense </h2>
+                <h2>🏥 NeHealth Monitor</h2>
             </div>
             <div class="nav-menu">
                 <a href="#dashboard" class="nav-link active" data-section="dashboard">Dashboard</a>
@@ -20,6 +20,7 @@
                 <a href="#water" class="nav-link" data-section="water">Water Quality</a>
                 <a href="#education" class="nav-link" data-section="education">Education</a>
                 <a href="#alerts" class="nav-link" data-section="alerts">Alerts</a>
+                <a href="#prediction" class="nav-link" data-section="prediction">AI Prediction</a>
             </div>
             <div class="language-selector">
                 <select id="languageSelect">
@@ -39,7 +40,7 @@
             <div class="container">
                 <div class="section-header">
                     <h1 data-translate="dashboard_title">Health Monitoring Dashboard</h1>
-                    <p data-translate="dashboard_subtitle">Real-time surveillance for water-borne diseases in Northeast India</p>
+                    <p data-translate="dashboard_subtitle">Smart surveillance system for water-borne diseases in Rural Northeast India</p>
                 </div>
 
                 <!-- Alert Banner -->
@@ -47,8 +48,8 @@
                     <div class="alert-content">
                         <span class="alert-icon">⚠️</span>
                         <div>
-                            <strong>Moderate Risk Alert</strong>
-                            <p>Increased cholera cases reported in Dibrugarh district. Enhanced monitoring activated.</p>
+                            <strong>AI Prediction Alert</strong>
+                            <p>ML model predicts 65% chance of diarrhea outbreak in Dibrugarh district within 7 days. Preventive measures recommended.</p>
                         </div>
                         <button class="alert-close">&times;</button>
                     </div>
@@ -59,32 +60,32 @@
                     <div class="metric-card">
                         <div class="metric-icon">👥</div>
                         <div class="metric-content">
-                            <h3>2,847</h3>
-                            <p data-translate="total_reports">Total Reports Today</p>
+                            <h3>1,247</h3>
+                            <p data-translate="total_reports">Community Reports Today</p>
                         </div>
                         <div class="metric-trend positive">+12%</div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-icon">🚨</div>
                         <div class="metric-content">
-                            <h3>3</h3>
-                            <p data-translate="active_alerts">Active Alerts</p>
+                            <h3>2</h3>
+                            <p data-translate="active_alerts">AI Outbreak Predictions</p>
                         </div>
                         <div class="metric-trend negative">+1</div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-icon">💧</div>
                         <div class="metric-content">
-                            <h3>87%</h3>
-                            <p data-translate="water_quality">Safe Water Sources</p>
+                            <h3>156</h3>
+                            <p data-translate="water_sources">Monitored Water Sources</p>
                         </div>
                         <div class="metric-trend positive">+5%</div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-icon">🏥</div>
                         <div class="metric-content">
-                            <h3>156</h3>
-                            <p data-translate="health_centers">Active Health Centers</p>
+                            <h3>89</h3>
+                            <p data-translate="asha_workers">Active ASHA Workers</p>
                         </div>
                         <div class="metric-trend stable">→</div>
                     </div>
@@ -93,14 +94,14 @@
                 <!-- Charts and Maps -->
                 <div class="dashboard-grid">
                     <div class="chart-container">
-                        <h3 data-translate="outbreak_trends">Disease Outbreak Trends</h3>
+                        <h3 data-translate="outbreak_trends">Water-borne Disease Trends (Monsoon Season)</h3>
                         <div class="chart-placeholder">
                             <canvas id="outbreakChart" width="400" height="200"></canvas>
                         </div>
                     </div>
                     
                     <div class="map-container">
-                        <h3 data-translate="risk_map">Risk Hotspot Map</h3>
+                        <h3 data-translate="risk_map">Northeast India Risk Hotspot Map</h3>
                         <div class="map-placeholder">
                             <div class="risk-zones">
                                 <div class="zone high-risk" style="top: 20%; left: 30%;">
@@ -111,9 +112,13 @@
                                     <span class="zone-label">Jorhat</span>
                                     <div class="zone-marker moderate"></div>
                                 </div>
-                                <div class="zone low-risk" style="top: 70%; left: 25%;">
-                                    <span class="zone-label">Tezpur</span>
-                                    <div class="zone-marker low"></div>
+                                <div class="zone moderate-risk" style="top: 70%; left: 25%;">
+                                    <span class="zone-label">Silchar</span>
+                                    <div class="zone-marker moderate"></div>
+                                </div>
+                                <div class="zone high-risk" style="top: 35%; left: 75%;">
+                                    <span class="zone-label">Imphal</span>
+                                    <div class="zone-marker high"></div>
                                 </div>
                             </div>
                         </div>
@@ -126,10 +131,6 @@
                                 <div class="legend-color moderate"></div>
                                 <span>Moderate Risk</span>
                             </div>
-                            <div class="legend-item">
-                                <div class="legend-color low"></div>
-                                <span>Low Risk</span>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -141,7 +142,7 @@
             <div class="container">
                 <div class="section-header">
                     <h1 data-translate="report_title">Community Health Reporting</h1>
-                    <p data-translate="report_subtitle">Report health incidents and symptoms in your community</p>
+                    <p data-translate="report_subtitle">Report health incidents via ASHA workers, volunteers, and community members</p>
                 </div>
 
                 <div class="report-form-container">
@@ -149,6 +150,16 @@
                         <div class="form-section">
                             <h3 data-translate="personal_info">Personal Information</h3>
                             <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="reporterType" data-translate="reporter_type">Reporter Type</label>
+                                    <select id="reporterType" name="reporterType" required>
+                                        <option value="">Select...</option>
+                                        <option value="asha">ASHA Worker</option>
+                                        <option value="volunteer">Community Volunteer</option>
+                                        <option value="individual">Individual/Family</option>
+                                        <option value="clinic">Local Clinic</option>
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <label for="reporterName" data-translate="name">Name</label>
                                     <input type="text" id="reporterName" name="reporterName" required>
@@ -159,15 +170,26 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="location" data-translate="location">Location/Village</label>
-                                    <input type="text" id="location" name="location" required>
+                                    <select id="location" name="location" required>
+                                        <option value="">Select District...</option>
+                                        <option value="dibrugarh">Dibrugarh, Assam</option>
+                                        <option value="jorhat">Jorhat, Assam</option>
+                                        <option value="silchar">Silchar, Assam</option>
+                                        <option value="imphal">Imphal, Manipur</option>
+                                        <option value="aizawl">Aizawl, Mizoram</option>
+                                        <option value="kohima">Kohima, Nagaland</option>
+                                        <option value="agartala">Agartala, Tripura</option>
+                                        <option value="shillong">Shillong, Meghalaya</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="reportType" data-translate="report_type">Report Type</label>
                                     <select id="reportType" name="reportType" required>
                                         <option value="">Select...</option>
                                         <option value="individual">Individual Case</option>
-                                        <option value="community">Community Outbreak</option>
+                                        <option value="community">Community Outbreak (5+ cases)</option>
                                         <option value="water_source">Water Source Issue</option>
+                                        <option value="seasonal">Seasonal Pattern Alert</option>
                                     </select>
                                 </div>
                             </div>
@@ -175,6 +197,7 @@
 
                         <div class="form-section">
                             <h3 data-translate="symptoms">Symptoms & Health Information</h3>
+                            <p class="form-note">Select all symptoms observed in the community:</p>
                             <div class="symptoms-grid">
                                 <label class="checkbox-container">
                                     <input type="checkbox" name="symptoms" value="diarrhea">
@@ -206,11 +229,32 @@
                                     <span class="checkmark"></span>
                                     <span data-translate="nausea">Nausea</span>
                                 </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" name="symptoms" value="headache">
+                                    <span class="checkmark"></span>
+                                    <span data-translate="headache">Headache</span>
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" name="symptoms" value="weakness">
+                                    <span class="checkmark"></span>
+                                    <span data-translate="weakness">Weakness/Fatigue</span>
+                                </label>
                             </div>
                         </div>
 
                         <div class="form-section">
                             <h3 data-translate="additional_info">Additional Information</h3>
+                            <div class="form-group">
+                                <label for="affectedCount" data-translate="affected_count">Number of People Affected</label>
+                                <select id="affectedCount" name="affectedCount" required>
+                                    <option value="">Select...</option>
+                                    <option value="1">1 person</option>
+                                    <option value="2-5">2-5 people</option>
+                                    <option value="6-10">6-10 people</option>
+                                    <option value="11-20">11-20 people</option>
+                                    <option value="20+">More than 20 people</option>
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <label for="severity" data-translate="severity">Severity Level</label>
                                 <select id="severity" name="severity" required>
@@ -230,6 +274,18 @@
                                     <option value="> 1 week">More than 1 week</option>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="waterSource" data-translate="suspected_source">Suspected Water Source</label>
+                                <select id="waterSource" name="waterSource">
+                                    <option value="">Select if known...</option>
+                                    <option value="well">Community Well</option>
+                                    <option value="river">River/Stream</option>
+                                    <option value="pond">Pond/Lake</option>
+                                    <option value="tube_well">Tube Well</option>
+                                    <option value="tap">Tap Water</option>
+                                    <option value="unknown">Unknown</option>
+                                </select>
+                            </div>
                             <div class="form-group full-width">
                                 <label for="description" data-translate="description">Additional Description</label>
                                 <textarea id="description" name="description" rows="4" placeholder="Provide any additional details about the symptoms or situation..."></textarea>
@@ -237,7 +293,7 @@
                         </div>
 
                         <button type="submit" class="btn-primary">
-                            <span data-translate="submit_report">Submit Report</span>
+                            <span data-translate="submit_report">Submit Community Report</span>
                         </button>
                     </form>
                 </div>
@@ -249,7 +305,7 @@
             <div class="container">
                 <div class="section-header">
                     <h1 data-translate="water_title">Water Quality Monitoring</h1>
-                    <p data-translate="water_subtitle">Real-time monitoring of water sources across communities</p>
+                    <p data-translate="water_subtitle">IoT sensors and manual testing for water source contamination monitoring</p>
                 </div>
 
                 <div class="water-grid">
@@ -257,6 +313,7 @@
                         <div class="source-header">
                             <h3>Dibrugarh Main Well</h3>
                             <div class="status-badge safe">Safe</div>
+                            <div class="sensor-type">IoT Sensor</div>
                         </div>
                         <div class="source-metrics">
                             <div class="metric">
@@ -272,13 +329,14 @@
                                 <span class="metric-value">0 CFU/ml</span>
                             </div>
                         </div>
-                        <div class="last-updated">Last updated: 2 minutes ago</div>
+                        <div class="last-updated">IoT Sensor - Last updated: 2 minutes ago</div>
                     </div>
 
                     <div class="water-source-card warning">
                         <div class="source-header">
                             <h3>Jorhat Community Pump</h3>
                             <div class="status-badge warning">Warning</div>
+                            <div class="sensor-type">Manual Test</div>
                         </div>
                         <div class="source-metrics">
                             <div class="metric">
@@ -294,13 +352,14 @@
                                 <span class="metric-value">15 CFU/ml</span>
                             </div>
                         </div>
-                        <div class="last-updated">Last updated: 5 minutes ago</div>
+                        <div class="last-updated">Manual Test Kit - Last updated: 2 hours ago</div>
                     </div>
 
                     <div class="water-source-card critical">
                         <div class="source-header">
-                            <h3>Tezpur River Source</h3>
+                            <h3>Silchar River Source</h3>
                             <div class="status-badge critical">Critical</div>
+                            <div class="sensor-type">IoT Sensor</div>
                         </div>
                         <div class="source-metrics">
                             <div class="metric">
@@ -316,26 +375,26 @@
                                 <span class="metric-value">85 CFU/ml</span>
                             </div>
                         </div>
-                        <div class="last-updated">Last updated: 1 minute ago</div>
+                        <div class="last-updated">IoT Sensor - Last updated: 30 seconds ago</div>
                     </div>
 
                     <div class="add-source-card">
                         <div class="add-content">
                             <div class="add-icon">+</div>
                             <h3>Add New Water Source</h3>
-                            <p>Monitor additional water sources in your community</p>
+                            <p>Deploy IoT sensors or add manual testing locations</p>
                             <button class="btn-secondary" onclick="openAddSourceModal()">Add Source</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="water-testing-section">
-                    <h3 data-translate="manual_testing">Manual Water Testing</h3>
+                    <h3 data-translate="manual_testing">Manual Water Testing (Low-cost Test Kits)</h3>
                     <form id="waterTestForm" class="water-test-form">
                         <div class="form-grid">
                             <div class="form-group">
                                 <label for="sourceName">Water Source Name</label>
-                                <input type="text" id="sourceName" name="sourceName" required>
+                                <input type="text" id="sourceName" name="sourceName" placeholder="e.g., Village Well, River Point" required>
                             </div>
                             <div class="form-group">
                                 <label for="pH">pH Level</label>
@@ -349,8 +408,17 @@
                                 <label for="bacteria">Bacteria Count (CFU/ml)</label>
                                 <input type="number" id="bacteria" name="bacteria" min="0">
                             </div>
+                            <div class="form-group">
+                                <label for="testKit">Test Kit Type</label>
+                                <select id="testKit" name="testKit" required>
+                                    <option value="">Select...</option>
+                                    <option value="basic">Basic pH/Turbidity Kit</option>
+                                    <option value="bacteria">Bacteria Detection Kit</option>
+                                    <option value="comprehensive">Comprehensive Water Test Kit</option>
+                                </select>
+                            </div>
                         </div>
-                        <button type="submit" class="btn-primary">Submit Test Results</button>
+                        <button type="submit" class="btn-primary">Submit Manual Test Results</button>
                     </form>
                 </div>
             </div>
@@ -389,8 +457,22 @@
                     <div class="education-card">
                         <div class="card-icon">🌧️</div>
                         <h3 data-translate="monsoon_prep">Monsoon Preparation</h3>
-                        <p>Special precautions during monsoon season to prevent disease outbreaks.</p>
+                        <p>Critical precautions during Northeast India's monsoon season.</p>
                         <button class="btn-outline" onclick="openEducationModal('monsoon')">Learn More</button>
+                    </div>
+
+                    <div class="education-card">
+                        <div class="card-icon">📱</div>
+                        <h3 data-translate="mobile_reporting">Mobile Reporting</h3>
+                        <p>How ASHA workers and volunteers can use mobile apps for health reporting.</p>
+                        <button class="btn-outline" onclick="openEducationModal('mobile-reporting')">Learn More</button>
+                    </div>
+
+                    <div class="education-card">
+                        <div class="card-icon">🤖</div>
+                        <h3 data-translate="ai_predictions">AI Predictions</h3>
+                        <p>Understanding how AI helps predict disease outbreaks in your community.</p>
+                        <button class="btn-outline" onclick="openEducationModal('ai-predictions')">Learn More</button>
                     </div>
                 </div>
 
@@ -402,7 +484,7 @@
                                 <div class="play-button">▶️</div>
                                 <img src="https://images.pexels.com/photos/416528/pexels-photo-416528.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Water purification">
                             </div>
-                            <h4>Home Water Purification</h4>
+                            <h4>গৃহস্থালীর পানি বিশুদ্ধকরণ</h4>
                             <p>5 minutes • Assamese</p>
                         </div>
                         <div class="video-card">
@@ -410,8 +492,16 @@
                                 <div class="play-button">▶️</div>
                                 <img src="https://images.pexels.com/photos/3902882/pexels-photo-3902882.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Handwashing">
                             </div>
-                            <h4>Proper Handwashing</h4>
+                            <h4>সঠিক হাত ধোয়ার নিয়ম</h4>
                             <p>3 minutes • Bengali</p>
+                        </div>
+                        <div class="video-card">
+                            <div class="video-thumbnail">
+                                <div class="play-button">▶️</div>
+                                <img src="https://images.pexels.com/photos/5327585/pexels-photo-5327585.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Community health">
+                            </div>
+                            <h4>समुदायिक स्वास्थ्य रिपोर्टिंग</h4>
+                            <p>4 minutes • Hindi</p>
                         </div>
                     </div>
                 </div>
@@ -430,10 +520,10 @@
                     <div class="alert-item critical">
                         <div class="alert-header">
                             <div class="alert-level">🚨 Critical Alert</div>
-                            <div class="alert-time">2 hours ago</div>
+                            <div class="alert-time">1 hour ago</div>
                         </div>
-                        <h3>Cholera Outbreak Detected - Dibrugarh District</h3>
-                        <p>Multiple cases of cholera have been confirmed in Dibrugarh district. Immediate medical attention required for anyone experiencing severe diarrhea and vomiting.</p>
+                        <h3>AI Prediction: High Risk Diarrhea Outbreak - Dibrugarh District</h3>
+                        <p>ML model analysis indicates 85% probability of diarrhea outbreak within 48 hours based on water quality data, weather patterns, and symptom reports. District health officials have been notified.</p>
                         <div class="alert-actions">
                             <button class="btn-primary">View Details</button>
                             <button class="btn-outline">Share Alert</button>
@@ -443,10 +533,10 @@
                     <div class="alert-item warning">
                         <div class="alert-header">
                             <div class="alert-level">⚠️ Warning</div>
-                            <div class="alert-time">6 hours ago</div>
+                            <div class="alert-time">3 hours ago</div>
                         </div>
-                        <h3>Water Contamination Risk - Jorhat Area</h3>
-                        <p>Elevated bacterial levels detected in community water sources. Residents advised to boil water before consumption.</p>
+                        <h3>IoT Sensor Alert: Water Contamination - Silchar River Source</h3>
+                        <p>IoT sensors detected critical bacterial levels (85 CFU/ml) in Silchar river source. Immediate water treatment required. ASHA workers have been alerted.</p>
                         <div class="alert-actions">
                             <button class="btn-primary">View Details</button>
                             <button class="btn-outline">Share Alert</button>
@@ -456,10 +546,10 @@
                     <div class="alert-item info">
                         <div class="alert-header">
                             <div class="alert-level">ℹ️ Information</div>
-                            <div class="alert-time">1 day ago</div>
+                            <div class="alert-time">6 hours ago</div>
                         </div>
-                        <h3>Monsoon Health Preparedness Campaign</h3>
-                        <p>Annual health preparedness campaign begins next week. Free health check-ups and water testing kits available at community centers.</p>
+                        <h3>Monsoon Season Health Preparedness - Northeast India</h3>
+                        <p>Pre-monsoon health campaign active across all NE states. Free water testing kits distributed to ASHA workers. Mobile health units deployed to remote villages.</p>
                         <div class="alert-actions">
                             <button class="btn-primary">Learn More</button>
                             <button class="btn-outline">Register</button>
@@ -469,7 +559,7 @@
 
                 <div class="alert-subscription">
                     <h3>Alert Notifications</h3>
-                    <p>Subscribe to receive health alerts via SMS or WhatsApp</p>
+                    <p>Subscribe to receive AI predictions and health alerts via SMS or WhatsApp</p>
                     <form class="subscription-form">
                         <div class="form-group">
                             <input type="tel" placeholder="Enter your phone number" required>
@@ -479,11 +569,111 @@
                                 <option value="">Select notification method</option>
                                 <option value="sms">SMS</option>
                                 <option value="whatsapp">WhatsApp</option>
-                                <option value="both">Both</option>
+                                <option value="both">Both SMS & WhatsApp</option>
                             </select>
                         </div>
                         <button type="submit" class="btn-primary">Subscribe</button>
                     </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Prediction Section -->
+        <section id="prediction" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 data-translate="prediction_title">AI/ML Outbreak Prediction Engine</h1>
+                    <p data-translate="prediction_subtitle">Machine learning models analyzing health data, water quality, and seasonal patterns</p>
+                </div>
+
+                <div class="prediction-grid">
+                    <div class="prediction-card high-risk">
+                        <div class="prediction-header">
+                            <h3>Dibrugarh District</h3>
+                            <div class="risk-percentage">85%</div>
+                        </div>
+                        <div class="prediction-details">
+                            <p><strong>Disease:</strong> Diarrhea</p>
+                            <p><strong>Timeline:</strong> Next 48 hours</p>
+                            <p><strong>Confidence:</strong> High</p>
+                            <p><strong>Factors:</strong> Water contamination, weather patterns, symptom clusters</p>
+                        </div>
+                        <div class="prediction-actions">
+                            <button class="btn-primary">Alert Authorities</button>
+                            <button class="btn-outline">View Details</button>
+                        </div>
+                    </div>
+
+                    <div class="prediction-card moderate-risk">
+                        <div class="prediction-header">
+                            <h3>Imphal District</h3>
+                            <div class="risk-percentage">65%</div>
+                        </div>
+                        <div class="prediction-details">
+                            <p><strong>Disease:</strong> Typhoid</p>
+                            <p><strong>Timeline:</strong> Next 7 days</p>
+                            <p><strong>Confidence:</strong> Moderate</p>
+                            <p><strong>Factors:</strong> Seasonal trends, water quality decline</p>
+                        </div>
+                        <div class="prediction-actions">
+                            <button class="btn-primary">Monitor Closely</button>
+                            <button class="btn-outline">View Details</button>
+                        </div>
+                    </div>
+
+                    <div class="prediction-card low-risk">
+                        <div class="prediction-header">
+                            <h3>Shillong District</h3>
+                            <div class="risk-percentage">25%</div>
+                        </div>
+                        <div class="prediction-details">
+                            <p><strong>Disease:</strong> Cholera</p>
+                            <p><strong>Timeline:</strong> Next 14 days</p>
+                            <p><strong>Confidence:</strong> Low</p>
+                            <p><strong>Factors:</strong> Good water quality, low symptom reports</p>
+                        </div>
+                        <div class="prediction-actions">
+                            <button class="btn-secondary">Continue Monitoring</button>
+                            <button class="btn-outline">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ml-insights">
+                    <h3>Machine Learning Insights</h3>
+                    <div class="insights-grid">
+                        <div class="insight-card">
+                            <div class="insight-icon">📊</div>
+                            <h4>Data Sources</h4>
+                            <ul>
+                                <li>Community health reports from ASHA workers</li>
+                                <li>IoT water quality sensor data</li>
+                                <li>Weather and seasonal patterns</li>
+                                <li>Historical outbreak data</li>
+                                <li>Population density and mobility</li>
+                            </ul>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-icon">🧠</div>
+                            <h4>ML Models Used</h4>
+                            <ul>
+                                <li>Time Series Analysis for seasonal patterns</li>
+                                <li>Random Forest for risk classification</li>
+                                <li>Neural Networks for complex pattern recognition</li>
+                                <li>Clustering algorithms for hotspot detection</li>
+                            </ul>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-icon">⚡</div>
+                            <h4>Real-time Processing</h4>
+                            <ul>
+                                <li>Models updated every 6 hours</li>
+                                <li>Real-time IoT sensor integration</li>
+                                <li>Automatic alert generation</li>
+                                <li>95% accuracy in outbreak prediction</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

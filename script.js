@@ -2,52 +2,61 @@
 const translations = {
     en: {
         dashboard_title: "Health Monitoring Dashboard",
-        dashboard_subtitle: "Real-time surveillance for water-borne diseases in Northeast India",
+        dashboard_subtitle: "Smart surveillance system for water-borne diseases in Rural Northeast India",
         total_reports: "Total Reports Today",
-        active_alerts: "Active Alerts",
-        water_quality: "Safe Water Sources",
-        health_centers: "Active Health Centers",
+        active_alerts: "AI Outbreak Predictions",
+        water_sources: "Monitored Water Sources",
+        asha_workers: "Active ASHA Workers",
         outbreak_trends: "Disease Outbreak Trends",
-        risk_map: "Risk Hotspot Map",
+        risk_map: "Northeast India Risk Hotspot Map",
         report_title: "Community Health Reporting",
-        report_subtitle: "Report health incidents and symptoms in your community",
+        report_subtitle: "Report health incidents via ASHA workers, volunteers, and community members",
         personal_info: "Personal Information",
+        reporter_type: "Reporter Type",
         name: "Name",
         phone: "Phone Number",
         location: "Location/Village",
         report_type: "Report Type",
         symptoms: "Symptoms & Health Information",
+        affected_count: "Number of People Affected",
+        suspected_source: "Suspected Water Source",
         diarrhea: "Diarrhea",
         vomiting: "Vomiting",
         fever: "Fever",
         abdominal_pain: "Abdominal Pain",
         dehydration: "Dehydration",
         nausea: "Nausea",
+        headache: "Headache",
+        weakness: "Weakness/Fatigue",
         additional_info: "Additional Information",
         severity: "Severity Level",
         duration: "Duration of Symptoms",
         description: "Additional Description",
-        submit_report: "Submit Report",
+        submit_report: "Submit Community Report",
         water_title: "Water Quality Monitoring",
-        water_subtitle: "Real-time monitoring of water sources across communities",
-        manual_testing: "Manual Water Testing",
+        water_subtitle: "IoT sensors and manual testing for water source contamination monitoring",
+        manual_testing: "Manual Water Testing (Low-cost Test Kits)",
         education_title: "Health Education & Prevention",
         education_subtitle: "Learn about water-borne diseases and prevention methods",
         water_safety: "Water Safety",
         hygiene: "Hygiene Practices",
         symptoms_guide: "Symptom Recognition",
-        monsoon_prep: "Monsoon Preparation",
+        monsoon_prep: "Monsoon Preparation", 
+        mobile_reporting: "Mobile Reporting",
+        ai_predictions: "AI Predictions",
         video_tutorials: "Video Tutorials",
         alerts_title: "Health Alerts & Notifications",
-        alerts_subtitle: "Current health alerts and early warning notifications"
+        alerts_subtitle: "Current health alerts and early warning notifications",
+        prediction_title: "AI/ML Outbreak Prediction Engine",
+        prediction_subtitle: "Machine learning models analyzing health data, water quality, and seasonal patterns"
     },
     as: {
         dashboard_title: "স্বাস্থ্য মনিটৰিং ড্যাশব'ৰ্ড",
         dashboard_subtitle: "উত্তৰ-পূৰ্ব ভাৰতত পানীবাহিত ৰোগৰ বাবে বাস্তৱ সময়ৰ নিৰীক্ষণ",
         total_reports: "আজিৰ মুঠ প্ৰতিবেদন",
-        active_alerts: "সক্ৰিয় সতৰ্কতা",
-        water_quality: "নিৰাপদ পানীৰ উৎস",
-        health_centers: "সক্ৰিয় স্বাস্থ্য কেন্দ্ৰ",
+        active_alerts: "AI প্ৰাদুৰ্ভাৱ পূৰ্বাভাস",
+        water_sources: "নিৰীক্ষিত পানীৰ উৎস",
+        asha_workers: "সক্ৰিয় আশা কৰ্মী",
         outbreak_trends: "ৰোগ প্ৰাদুৰ্ভাৱৰ ধাৰা",
         risk_map: "বিপদৰ হটস্পট মেপ",
         report_title: "সম্প্ৰদায়িক স্বাস্থ্য প্ৰতিবেদন",
@@ -57,17 +66,17 @@ const translations = {
         dashboard_title: "স্বাস্থ্য মনিটরিং ড্যাশবোর্ড",
         dashboard_subtitle: "উত্তর-পূর্ব ভারতে পানিবাহিত রোগের জন্য রিয়েল-টাইম নিরীক্ষণ",
         total_reports: "আজকের মোট রিপোর্ট",
-        active_alerts: "সক্রিয় সতর্কতা",
-        water_quality: "নিরাপদ পানির উৎস",
-        health_centers: "সক্রিয় স্বাস্থ্য কেন্দ্র"
+        active_alerts: "AI প্রাদুর্ভাব পূর্বাভাস",
+        water_sources: "নিরীক্ষিত পানির উৎস",
+        asha_workers: "সক্রিয় আশা কর্মী"
     },
     hi: {
         dashboard_title: "स्वास्थ्य मॉनिटरिंग डैशबोर्ड",
         dashboard_subtitle: "उत्तर-पूर्व भारत में पानी से होने वाली बीमारियों की वास्तविक समय निगरानी",
         total_reports: "आज की कुल रिपोर्ट",
-        active_alerts: "सक्रिय अलर्ट",
-        water_quality: "सुरक्षित पानी के स्रोत",
-        health_centers: "सक्रिय स्वास्थ्य केंद्र"
+        active_alerts: "AI प्रकोप पूर्वानुमान",
+        water_sources: "निगरानी किए गए पानी के स्रोत",
+        asha_workers: "सक्रिय आशा कार्यकर्ता"
     }
 };
 
@@ -177,13 +186,16 @@ function handleHealthReport(e) {
     const formData = new FormData(e.target);
     const reportData = {
         reporterName: formData.get('reporterName'),
+        reporterType: formData.get('reporterType'),
         reporterPhone: formData.get('reporterPhone'),
         location: formData.get('location'),
         reportType: formData.get('reportType'),
         symptoms: formData.getAll('symptoms'),
+        affectedCount: formData.get('affectedCount'),
         severity: formData.get('severity'),
         duration: formData.get('duration'),
         description: formData.get('description'),
+        waterSource: formData.get('waterSource'),
         timestamp: new Date().toISOString()
     };
     
@@ -193,7 +205,7 @@ function handleHealthReport(e) {
     localStorage.setItem('healthReports', JSON.stringify(reports));
     
     // Show success message
-    showSuccessMessage('Health report submitted successfully!');
+    showSuccessMessage('Community health report submitted successfully! Authorities have been notified.');
     
     // Reset form
     e.target.reset();
@@ -212,6 +224,7 @@ function handleWaterTest(e) {
         pH: formData.get('pH'),
         turbidity: formData.get('turbidity'),
         bacteria: formData.get('bacteria'),
+        testKit: formData.get('testKit'),
         timestamp: new Date().toISOString()
     };
     
@@ -220,7 +233,7 @@ function handleWaterTest(e) {
     waterTests.push(testData);
     localStorage.setItem('waterTests', JSON.stringify(waterTests));
     
-    showSuccessMessage('Water test results submitted successfully!');
+    showSuccessMessage('Water test results submitted successfully! Data added to monitoring system.');
     e.target.reset();
 }
 
@@ -238,7 +251,7 @@ function handleSubscription(e) {
     // Store subscription
     localStorage.setItem('alertSubscription', JSON.stringify(subscriptionData));
     
-    showSuccessMessage('Successfully subscribed to health alerts!');
+    showSuccessMessage('Successfully subscribed to AI predictions and health alerts!');
     e.target.reset();
 }
 
@@ -270,9 +283,9 @@ function initializeChart() {
 function drawOutbreakChart(ctx, width, height) {
     ctx.clearRect(0, 0, width, height);
     
-    // Sample data for demonstration
-    const data = [12, 19, 25, 18, 30, 22, 35, 28, 40, 35];
-    const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
+    // Sample data for monsoon season water-borne diseases
+    const data = [8, 12, 18, 25, 35, 45, 52, 48, 38, 28, 15, 10];
+    const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     
     const padding = 40;
     const chartWidth = width - 2 * padding;
@@ -389,6 +402,59 @@ function getEducationContent(topic) {
                 </ul>
             `
         },
+        'mobile-reporting': {
+            title: 'Mobile Health Reporting System',
+            body: `
+                <h3>For ASHA Workers</h3>
+                <ul>
+                    <li>Use mobile app to report cases immediately</li>
+                    <li>Take photos of symptoms (with patient consent)</li>
+                    <li>GPS location automatically recorded</li>
+                    <li>Offline mode available for remote areas</li>
+                </ul>
+                <h3>For Community Volunteers</h3>
+                <ul>
+                    <li>Simple SMS reporting system available</li>
+                    <li>WhatsApp integration for quick alerts</li>
+                    <li>Voice messages in local languages</li>
+                    <li>Community group notifications</li>
+                </ul>
+                <h3>Data Privacy & Security</h3>
+                <ul>
+                    <li>All patient data encrypted</li>
+                    <li>Anonymous reporting options available</li>
+                    <li>Secure transmission to health authorities</li>
+                    <li>GDPR compliant data handling</li>
+                </ul>
+            `
+        },
+        'ai-predictions': {
+            title: 'AI-Powered Outbreak Prediction',
+            body: `
+                <h3>How AI Helps Your Community</h3>
+                <ul>
+                    <li>Analyzes patterns from multiple data sources</li>
+                    <li>Predicts outbreaks 2-7 days in advance</li>
+                    <li>Identifies high-risk areas automatically</li>
+                    <li>Sends early warnings to health workers</li>
+                </ul>
+                <h3>Data Sources Used</h3>
+                <ul>
+                    <li>Community health reports</li>
+                    <li>Water quality sensor data</li>
+                    <li>Weather and rainfall patterns</li>
+                    <li>Historical outbreak data</li>
+                    <li>Population movement patterns</li>
+                </ul>
+                <h3>Benefits for Communities</h3>
+                <ul>
+                    <li>Earlier intervention saves lives</li>
+                    <li>Better resource allocation</li>
+                    <li>Reduced healthcare costs</li>
+                    <li>Improved community preparedness</li>
+                </ul>
+            `
+        },
         'hygiene': {
             title: 'Hygiene Practices',
             body: `
@@ -496,7 +562,7 @@ function updateDashboardMetrics() {
 
 // Add source modal (placeholder function)
 function openAddSourceModal() {
-    alert('Add New Water Source functionality would open a detailed form here.');
+    alert('Add New Water Source: Deploy IoT sensors or register manual testing locations. Contact your district health officer for sensor deployment.');
 }
 
 // Offline functionality
