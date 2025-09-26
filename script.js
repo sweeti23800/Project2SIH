@@ -1,0 +1,522 @@
+// Translation data
+const translations = {
+    en: {
+        dashboard_title: "Health Monitoring Dashboard",
+        dashboard_subtitle: "Real-time surveillance for water-borne diseases in Northeast India",
+        total_reports: "Total Reports Today",
+        active_alerts: "Active Alerts",
+        water_quality: "Safe Water Sources",
+        health_centers: "Active Health Centers",
+        outbreak_trends: "Disease Outbreak Trends",
+        risk_map: "Risk Hotspot Map",
+        report_title: "Community Health Reporting",
+        report_subtitle: "Report health incidents and symptoms in your community",
+        personal_info: "Personal Information",
+        name: "Name",
+        phone: "Phone Number",
+        location: "Location/Village",
+        report_type: "Report Type",
+        symptoms: "Symptoms & Health Information",
+        diarrhea: "Diarrhea",
+        vomiting: "Vomiting",
+        fever: "Fever",
+        abdominal_pain: "Abdominal Pain",
+        dehydration: "Dehydration",
+        nausea: "Nausea",
+        additional_info: "Additional Information",
+        severity: "Severity Level",
+        duration: "Duration of Symptoms",
+        description: "Additional Description",
+        submit_report: "Submit Report",
+        water_title: "Water Quality Monitoring",
+        water_subtitle: "Real-time monitoring of water sources across communities",
+        manual_testing: "Manual Water Testing",
+        education_title: "Health Education & Prevention",
+        education_subtitle: "Learn about water-borne diseases and prevention methods",
+        water_safety: "Water Safety",
+        hygiene: "Hygiene Practices",
+        symptoms_guide: "Symptom Recognition",
+        monsoon_prep: "Monsoon Preparation",
+        video_tutorials: "Video Tutorials",
+        alerts_title: "Health Alerts & Notifications",
+        alerts_subtitle: "Current health alerts and early warning notifications"
+    },
+    as: {
+        dashboard_title: "স্বাস্থ্য মনিটৰিং ড্যাশব'ৰ্ড",
+        dashboard_subtitle: "উত্তৰ-পূৰ্ব ভাৰতত পানীবাহিত ৰোগৰ বাবে বাস্তৱ সময়ৰ নিৰীক্ষণ",
+        total_reports: "আজিৰ মুঠ প্ৰতিবেদন",
+        active_alerts: "সক্ৰিয় সতৰ্কতা",
+        water_quality: "নিৰাপদ পানীৰ উৎস",
+        health_centers: "সক্ৰিয় স্বাস্থ্য কেন্দ্ৰ",
+        outbreak_trends: "ৰোগ প্ৰাদুৰ্ভাৱৰ ধাৰা",
+        risk_map: "বিপদৰ হটস্পট মেপ",
+        report_title: "সম্প্ৰদায়িক স্বাস্থ্য প্ৰতিবেদন",
+        report_subtitle: "আপোনাৰ সম্প্ৰদায়ত স্বাস্থ্য সমস্যা আৰু লক্ষণসমূহ প্ৰতিবেদন কৰক"
+    },
+    bn: {
+        dashboard_title: "স্বাস্থ্য মনিটরিং ড্যাশবোর্ড",
+        dashboard_subtitle: "উত্তর-পূর্ব ভারতে পানিবাহিত রোগের জন্য রিয়েল-টাইম নিরীক্ষণ",
+        total_reports: "আজকের মোট রিপোর্ট",
+        active_alerts: "সক্রিয় সতর্কতা",
+        water_quality: "নিরাপদ পানির উৎস",
+        health_centers: "সক্রিয় স্বাস্থ্য কেন্দ্র"
+    },
+    hi: {
+        dashboard_title: "स्वास्थ्य मॉनिटरिंग डैशबोर्ड",
+        dashboard_subtitle: "उत्तर-पूर्व भारत में पानी से होने वाली बीमारियों की वास्तविक समय निगरानी",
+        total_reports: "आज की कुल रिपोर्ट",
+        active_alerts: "सक्रिय अलर्ट",
+        water_quality: "सुरक्षित पानी के स्रोत",
+        health_centers: "सक्रिय स्वास्थ्य केंद्र"
+    }
+};
+
+// Global variables
+let currentLanguage = 'en';
+let outbreakChart;
+
+// Initialize the application
+document.addEventListener('DOMContentLoaded', function() {
+    initializeNavigation();
+    initializeLanguageSelector();
+    initializeForms();
+    initializeChart();
+    initializeModals();
+    
+    // Load saved language preference
+    const savedLanguage = localStorage.getItem('selectedLanguage');
+    if (savedLanguage && translations[savedLanguage]) {
+        currentLanguage = savedLanguage;
+        document.getElementById('languageSelect').value = savedLanguage;
+        updateLanguage();
+    }
+});
+
+// Navigation functionality
+function initializeNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.section');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Remove active class from all links and sections
+            navLinks.forEach(l => l.classList.remove('active'));
+            sections.forEach(s => s.classList.remove('active'));
+            
+            // Add active class to clicked link
+            this.classList.add('active');
+            
+            // Show corresponding section
+            const sectionId = this.getAttribute('data-section');
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+        });
+    });
+    
+    // Close alert banner
+    const alertClose = document.querySelector('.alert-close');
+    if (alertClose) {
+        alertClose.addEventListener('click', function() {
+            this.closest('.alert-banner').style.display = 'none';
+        });
+    }
+}
+
+// Language selector functionality
+function initializeLanguageSelector() {
+    const languageSelect = document.getElementById('languageSelect');
+    
+    languageSelect.addEventListener('change', function() {
+        currentLanguage = this.value;
+        localStorage.setItem('selectedLanguage', currentLanguage);
+        updateLanguage();
+    });
+}
+
+// Update language
+function updateLanguage() {
+    const elements = document.querySelectorAll('[data-translate]');
+    const currentTranslations = translations[currentLanguage] || translations.en;
+    
+    elements.forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (currentTranslations[key]) {
+            element.textContent = currentTranslations[key];
+        }
+    });
+}
+
+// Form handling
+function initializeForms() {
+    const healthReportForm = document.getElementById('healthReportForm');
+    const waterTestForm = document.getElementById('waterTestForm');
+    
+    if (healthReportForm) {
+        healthReportForm.addEventListener('submit', handleHealthReport);
+    }
+    
+    if (waterTestForm) {
+        waterTestForm.addEventListener('submit', handleWaterTest);
+    }
+    
+    // Alert subscription form
+    const subscriptionForm = document.querySelector('.subscription-form');
+    if (subscriptionForm) {
+        subscriptionForm.addEventListener('submit', handleSubscription);
+    }
+}
+
+// Handle health report submission
+function handleHealthReport(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const reportData = {
+        reporterName: formData.get('reporterName'),
+        reporterPhone: formData.get('reporterPhone'),
+        location: formData.get('location'),
+        reportType: formData.get('reportType'),
+        symptoms: formData.getAll('symptoms'),
+        severity: formData.get('severity'),
+        duration: formData.get('duration'),
+        description: formData.get('description'),
+        timestamp: new Date().toISOString()
+    };
+    
+    // Store in localStorage for demo purposes
+    const reports = JSON.parse(localStorage.getItem('healthReports') || '[]');
+    reports.push(reportData);
+    localStorage.setItem('healthReports', JSON.stringify(reports));
+    
+    // Show success message
+    showSuccessMessage('Health report submitted successfully!');
+    
+    // Reset form
+    e.target.reset();
+    
+    // Update metrics (demo)
+    updateDashboardMetrics();
+}
+
+// Handle water test submission
+function handleWaterTest(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const testData = {
+        sourceName: formData.get('sourceName'),
+        pH: formData.get('pH'),
+        turbidity: formData.get('turbidity'),
+        bacteria: formData.get('bacteria'),
+        timestamp: new Date().toISOString()
+    };
+    
+    // Store in localStorage
+    const waterTests = JSON.parse(localStorage.getItem('waterTests') || '[]');
+    waterTests.push(testData);
+    localStorage.setItem('waterTests', JSON.stringify(waterTests));
+    
+    showSuccessMessage('Water test results submitted successfully!');
+    e.target.reset();
+}
+
+// Handle alert subscription
+function handleSubscription(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const subscriptionData = {
+        phone: formData.get('phone'),
+        method: formData.get('method'),
+        timestamp: new Date().toISOString()
+    };
+    
+    // Store subscription
+    localStorage.setItem('alertSubscription', JSON.stringify(subscriptionData));
+    
+    showSuccessMessage('Successfully subscribed to health alerts!');
+    e.target.reset();
+}
+
+// Show success message
+function showSuccessMessage(message) {
+    const successMessage = document.getElementById('successMessage');
+    const successText = document.getElementById('successText');
+    
+    successText.textContent = message;
+    successMessage.classList.add('show');
+    
+    setTimeout(() => {
+        successMessage.classList.remove('show');
+    }, 3000);
+}
+
+// Initialize chart
+function initializeChart() {
+    const canvas = document.getElementById('outbreakChart');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    // Simple chart drawing
+    drawOutbreakChart(ctx, canvas.width, canvas.height);
+}
+
+// Draw outbreak trends chart
+function drawOutbreakChart(ctx, width, height) {
+    ctx.clearRect(0, 0, width, height);
+    
+    // Sample data for demonstration
+    const data = [12, 19, 25, 18, 30, 22, 35, 28, 40, 35];
+    const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
+    
+    const padding = 40;
+    const chartWidth = width - 2 * padding;
+    const chartHeight = height - 2 * padding;
+    const maxValue = Math.max(...data);
+    
+    // Draw axes
+    ctx.strokeStyle = '#e5e7eb';
+    ctx.lineWidth = 1;
+    
+    // Y-axis
+    ctx.beginPath();
+    ctx.moveTo(padding, padding);
+    ctx.lineTo(padding, height - padding);
+    ctx.stroke();
+    
+    // X-axis
+    ctx.beginPath();
+    ctx.moveTo(padding, height - padding);
+    ctx.lineTo(width - padding, height - padding);
+    ctx.stroke();
+    
+    // Draw data line
+    ctx.strokeStyle = '#2563eb';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    
+    data.forEach((value, index) => {
+        const x = padding + (index * chartWidth) / (data.length - 1);
+        const y = height - padding - (value / maxValue) * chartHeight;
+        
+        if (index === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
+        }
+    });
+    
+    ctx.stroke();
+    
+    // Draw data points
+    ctx.fillStyle = '#2563eb';
+    data.forEach((value, index) => {
+        const x = padding + (index * chartWidth) / (data.length - 1);
+        const y = height - padding - (value / maxValue) * chartHeight;
+        
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, 2 * Math.PI);
+        ctx.fill();
+    });
+    
+    // Add labels
+    ctx.fillStyle = '#6b7280';
+    ctx.font = '12px Inter';
+    ctx.textAlign = 'center';
+    
+    labels.forEach((label, index) => {
+        const x = padding + (index * chartWidth) / (data.length - 1);
+        ctx.fillText(label, x, height - 10);
+    });
+}
+
+// Modal functionality
+function initializeModals() {
+    const modal = document.getElementById('educationModal');
+    const closeModal = document.querySelector('.modal-close');
+    
+    if (closeModal) {
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+    }
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+}
+
+// Open education modal
+function openEducationModal(topic) {
+    const modal = document.getElementById('educationModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    
+    const content = getEducationContent(topic);
+    modalTitle.textContent = content.title;
+    modalBody.innerHTML = content.body;
+    
+    modal.style.display = 'block';
+}
+
+// Get education content
+function getEducationContent(topic) {
+    const content = {
+        'water-safety': {
+            title: 'Water Safety Guidelines',
+            body: `
+                <h3>Safe Drinking Water Practices</h3>
+                <ul>
+                    <li><strong>Boil water:</strong> Boil drinking water for at least 1 minute to kill harmful bacteria and viruses</li>
+                    <li><strong>Use water purification tablets:</strong> Follow package instructions for proper dosage</li>
+                    <li><strong>Store water safely:</strong> Keep purified water in clean, covered containers</li>
+                    <li><strong>Avoid contaminated sources:</strong> Don't use water from rivers, ponds, or wells without treatment</li>
+                </ul>
+                <h3>Water Storage Tips</h3>
+                <ul>
+                    <li>Clean water containers regularly with soap and bleach</li>
+                    <li>Cover water containers to prevent contamination</li>
+                    <li>Use water within 24 hours of purification</li>
+                    <li>Keep storage containers away from toilets and garbage</li>
+                </ul>
+            `
+        },
+        'hygiene': {
+            title: 'Hygiene Practices',
+            body: `
+                <h3>Hand Hygiene</h3>
+                <ul>
+                    <li>Wash hands with soap and water for at least 20 seconds</li>
+                    <li>Wash hands before eating, after using toilet, and after handling waste</li>
+                    <li>Use alcohol-based hand sanitizer when soap is not available</li>
+                </ul>
+                <h3>Food Safety</h3>
+                <ul>
+                    <li>Cook food thoroughly and eat while hot</li>
+                    <li>Avoid raw or undercooked food</li>
+                    <li>Peel fruits yourself</li>
+                    <li>Avoid street vendor food during outbreaks</li>
+                </ul>
+                <h3>Personal Hygiene</h3>
+                <ul>
+                    <li>Bathe regularly with clean water and soap</li>
+                    <li>Keep fingernails short and clean</li>
+                    <li>Wear clean clothes</li>
+                    <li>Dispose of waste properly</li>
+                </ul>
+            `
+        },
+        'symptoms': {
+            title: 'Recognizing Water-borne Disease Symptoms',
+            body: `
+                <h3>Common Symptoms</h3>
+                <div class="symptom-category">
+                    <h4>Diarrheal Diseases (Cholera, E.coli)</h4>
+                    <ul>
+                        <li>Frequent watery stools</li>
+                        <li>Severe dehydration</li>
+                        <li>Vomiting</li>
+                        <li>Abdominal cramps</li>
+                    </ul>
+                </div>
+                <div class="symptom-category">
+                    <h4>Typhoid Fever</h4>
+                    <ul>
+                        <li>High fever (104°F/40°C)</li>
+                        <li>Severe headache</li>
+                        <li>Abdominal pain</li>
+                        <li>Rose-colored spots on torso</li>
+                    </ul>
+                </div>
+                <h3>When to Seek Medical Help</h3>
+                <ul>
+                    <li><strong>Immediate:</strong> Severe dehydration, high fever, blood in stool</li>
+                    <li><strong>Within 24 hours:</strong> Persistent vomiting, inability to keep fluids down</li>
+                    <li><strong>For children:</strong> Any symptoms in infants under 6 months</li>
+                </ul>
+            `
+        },
+        'monsoon': {
+            title: 'Monsoon Health Preparedness',
+            body: `
+                <h3>Pre-Monsoon Preparation</h3>
+                <ul>
+                    <li>Stock up on water purification tablets</li>
+                    <li>Repair and clean water storage tanks</li>
+                    <li>Check drainage systems around your home</li>
+                    <li>Prepare emergency medical supplies</li>
+                </ul>
+                <h3>During Monsoon</h3>
+                <ul>
+                    <li>Avoid walking through flood water</li>
+                    <li>Increase water treatment vigilance</li>
+                    <li>Report contaminated water sources immediately</li>
+                    <li>Monitor family health closely</li>
+                </ul>
+                <h3>Special Precautions</h3>
+                <ul>
+                    <li>Pregnant women and elderly need extra care</li>
+                    <li>Children should avoid playing in stagnant water</li>
+                    <li>Maintain higher hygiene standards</li>
+                    <li>Keep emergency contact numbers handy</li>
+                </ul>
+            `
+        }
+    };
+    
+    return content[topic] || {
+        title: 'Information',
+        body: '<p>Content not available.</p>'
+    };
+}
+
+// Update dashboard metrics (demo function)
+function updateDashboardMetrics() {
+    const reports = JSON.parse(localStorage.getItem('healthReports') || '[]');
+    const todayReports = reports.filter(report => {
+        const reportDate = new Date(report.timestamp).toDateString();
+        const today = new Date().toDateString();
+        return reportDate === today;
+    });
+    
+    // Update the metric display
+    const totalReportsElement = document.querySelector('.metric-card:first-child .metric-content h3');
+    if (totalReportsElement) {
+        totalReportsElement.textContent = todayReports.length.toLocaleString();
+    }
+}
+
+// Add source modal (placeholder function)
+function openAddSourceModal() {
+    alert('Add New Water Source functionality would open a detailed form here.');
+}
+
+// Offline functionality
+window.addEventListener('online', function() {
+    showSuccessMessage('Connection restored. Data will be synchronized.');
+});
+
+window.addEventListener('offline', function() {
+    showSuccessMessage('You are offline. Data will be saved locally.');
+});
+
+// Service worker registration for offline support
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('ServiceWorker registration successful');
+            })
+            .catch(function(err) {
+                console.log('ServiceWorker registration failed');
+            });
+    });
+}

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Health Monitoring System - Northeast India</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>🏥 Health Monitor</h2>
+            </div>
+            <div class="nav-menu">
+                <a href="#dashboard" class="nav-link active" data-section="dashboard">Dashboard</a>
+                <a href="#report" class="nav-link" data-section="report">Report</a>
+                <a href="#water" class="nav-link" data-section="water">Water Quality</a>
+                <a href="#education" class="nav-link" data-section="education">Education</a>
+                <a href="#alerts" class="nav-link" data-section="alerts">Alerts</a>
+            </div>
+            <div class="language-selector">
+                <select id="languageSelect">
+                    <option value="en">English</option>
+                    <option value="as">অসমীয়া</option>
+                    <option value="bn">বাংলা</option>
+                    <option value="hi">हिंदी</option>
+                </select>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="container">
+                <div class="section-header">
+                    <h1 data-translate="dashboard_title">Health Monitoring Dashboard</h1>
+                    <p data-translate="dashboard_subtitle">Real-time surveillance for water-borne diseases in Northeast India</p>
+                </div>
+
+                <!-- Alert Banner -->
+                <div class="alert-banner moderate" id="alertBanner">
+                    <div class="alert-content">
+                        <span class="alert-icon">⚠️</span>
+                        <div>
+                            <strong>Moderate Risk Alert</strong>
+                            <p>Increased cholera cases reported in Dibrugarh district. Enhanced monitoring activated.</p>
+                        </div>
+                        <button class="alert-close">&times;</button>
+                    </div>
+                </div>
+
+                <!-- Key Metrics -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon">👥</div>
+                        <div class="metric-content">
+                            <h3>2,847</h3>
+                            <p data-translate="total_reports">Total Reports Today</p>
+                        </div>
+                        <div class="metric-trend positive">+12%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">🚨</div>
+                        <div class="metric-content">
+                            <h3>3</h3>
+                            <p data-translate="active_alerts">Active Alerts</p>
+                        </div>
+                        <div class="metric-trend negative">+1</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">💧</div>
+                        <div class="metric-content">
+                            <h3>87%</h3>
+                            <p data-translate="water_quality">Safe Water Sources</p>
+                        </div>
+                        <div class="metric-trend positive">+5%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">🏥</div>
+                        <div class="metric-content">
+                            <h3>156</h3>
+                            <p data-translate="health_centers">Active Health Centers</p>
+                        </div>
+                        <div class="metric-trend stable">→</div>
+                    </div>
+                </div>
+
+                <!-- Charts and Maps -->
+                <div class="dashboard-grid">
+                    <div class="chart-container">
+                        <h3 data-translate="outbreak_trends">Disease Outbreak Trends</h3>
+                        <div class="chart-placeholder">
+                            <canvas id="outbreakChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="map-container">
+                        <h3 data-translate="risk_map">Risk Hotspot Map</h3>
+                        <div class="map-placeholder">
+                            <div class="risk-zones">
+                                <div class="zone high-risk" style="top: 20%; left: 30%;">
+                                    <span class="zone-label">Dibrugarh</span>
+                                    <div class="zone-marker high"></div>
+                                </div>
+                                <div class="zone moderate-risk" style="top: 45%; left: 60%;">
+                                    <span class="zone-label">Jorhat</span>
+                                    <div class="zone-marker moderate"></div>
+                                </div>
+                                <div class="zone low-risk" style="top: 70%; left: 25%;">
+                                    <span class="zone-label">Tezpur</span>
+                                    <div class="zone-marker low"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="map-legend">
+                            <div class="legend-item">
+                                <div class="legend-color high"></div>
+                                <span>High Risk</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color moderate"></div>
+                                <span>Moderate Risk</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color low"></div>
+                                <span>Low Risk</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Report Section -->
+        <section id="report" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 data-translate="report_title">Community Health Reporting</h1>
+                    <p data-translate="report_subtitle">Report health incidents and symptoms in your community</p>
+                </div>
+
+                <div class="report-form-container">
+                    <form id="healthReportForm" class="health-form">
+                        <div class="form-section">
+                            <h3 data-translate="personal_info">Personal Information</h3>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="reporterName" data-translate="name">Name</label>
+                                    <input type="text" id="reporterName" name="reporterName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reporterPhone" data-translate="phone">Phone Number</label>
+                                    <input type="tel" id="reporterPhone" name="reporterPhone" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="location" data-translate="location">Location/Village</label>
+                                    <input type="text" id="location" name="location" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reportType" data-translate="report_type">Report Type</label>
+                                    <select id="reportType" name="reportType" required>
+                                        <option value="">Select...</option>
+                                        <option value="individual">Individual Case</option>
+                                        <option value="community">Community Outbreak</option>
+                                        <option value="water_source">Water Source Issue</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3 data-translate="symptoms">Symptoms & Health Information</h3>
+                            <div class="symptoms-grid">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" name="symptoms" value="diarrhea">
+                                    <span class="checkmark"></span>
+                                    <span data-translate="diarrhea">Diarrhea</span>
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" name="symptoms" value="vomiting">
+                                    <span class="checkmark"></span>
+                                    <span data-translate="vomiting">Vomiting</span>
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" name="symptoms" value="fever">
+                                    <span class="checkmark"></span>
+                                    <span data-translate="fever">Fever</span>
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" name="symptoms" value="abdominal_pain">
+                                    <span class="checkmark"></span>
+                                    <span data-translate="abdominal_pain">Abdominal Pain</span>
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" name="symptoms" value="dehydration">
+                                    <span class="checkmark"></span>
+                                    <span data-translate="dehydration">Dehydration</span>
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" name="symptoms" value="nausea">
+                                    <span class="checkmark"></span>
+                                    <span data-translate="nausea">Nausea</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3 data-translate="additional_info">Additional Information</h3>
+                            <div class="form-group">
+                                <label for="severity" data-translate="severity">Severity Level</label>
+                                <select id="severity" name="severity" required>
+                                    <option value="">Select...</option>
+                                    <option value="mild">Mild</option>
+                                    <option value="moderate">Moderate</option>
+                                    <option value="severe">Severe</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="duration" data-translate="duration">Duration of Symptoms</label>
+                                <select id="duration" name="duration" required>
+                                    <option value="">Select...</option>
+                                    <option value="< 24 hours">Less than 24 hours</option>
+                                    <option value="1-3 days">1-3 days</option>
+                                    <option value="4-7 days">4-7 days</option>
+                                    <option value="> 1 week">More than 1 week</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="description" data-translate="description">Additional Description</label>
+                                <textarea id="description" name="description" rows="4" placeholder="Provide any additional details about the symptoms or situation..."></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary">
+                            <span data-translate="submit_report">Submit Report</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Water Quality Section -->
+        <section id="water" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 data-translate="water_title">Water Quality Monitoring</h1>
+                    <p data-translate="water_subtitle">Real-time monitoring of water sources across communities</p>
+                </div>
+
+                <div class="water-grid">
+                    <div class="water-source-card safe">
+                        <div class="source-header">
+                            <h3>Dibrugarh Main Well</h3>
+                            <div class="status-badge safe">Safe</div>
+                        </div>
+                        <div class="source-metrics">
+                            <div class="metric">
+                                <span class="metric-label">pH Level</span>
+                                <span class="metric-value">7.2</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Turbidity</span>
+                                <span class="metric-value">0.8 NTU</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Bacteria</span>
+                                <span class="metric-value">0 CFU/ml</span>
+                            </div>
+                        </div>
+                        <div class="last-updated">Last updated: 2 minutes ago</div>
+                    </div>
+
+                    <div class="water-source-card warning">
+                        <div class="source-header">
+                            <h3>Jorhat Community Pump</h3>
+                            <div class="status-badge warning">Warning</div>
+                        </div>
+                        <div class="source-metrics">
+                            <div class="metric">
+                                <span class="metric-label">pH Level</span>
+                                <span class="metric-value">6.1</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Turbidity</span>
+                                <span class="metric-value">3.2 NTU</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Bacteria</span>
+                                <span class="metric-value">15 CFU/ml</span>
+                            </div>
+                        </div>
+                        <div class="last-updated">Last updated: 5 minutes ago</div>
+                    </div>
+
+                    <div class="water-source-card critical">
+                        <div class="source-header">
+                            <h3>Tezpur River Source</h3>
+                            <div class="status-badge critical">Critical</div>
+                        </div>
+                        <div class="source-metrics">
+                            <div class="metric">
+                                <span class="metric-label">pH Level</span>
+                                <span class="metric-value">5.4</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Turbidity</span>
+                                <span class="metric-value">8.7 NTU</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Bacteria</span>
+                                <span class="metric-value">85 CFU/ml</span>
+                            </div>
+                        </div>
+                        <div class="last-updated">Last updated: 1 minute ago</div>
+                    </div>
+
+                    <div class="add-source-card">
+                        <div class="add-content">
+                            <div class="add-icon">+</div>
+                            <h3>Add New Water Source</h3>
+                            <p>Monitor additional water sources in your community</p>
+                            <button class="btn-secondary" onclick="openAddSourceModal()">Add Source</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="water-testing-section">
+                    <h3 data-translate="manual_testing">Manual Water Testing</h3>
+                    <form id="waterTestForm" class="water-test-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="sourceName">Water Source Name</label>
+                                <input type="text" id="sourceName" name="sourceName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pH">pH Level</label>
+                                <input type="number" id="pH" name="pH" step="0.1" min="0" max="14">
+                            </div>
+                            <div class="form-group">
+                                <label for="turbidity">Turbidity (NTU)</label>
+                                <input type="number" id="turbidity" name="turbidity" step="0.1" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="bacteria">Bacteria Count (CFU/ml)</label>
+                                <input type="number" id="bacteria" name="bacteria" min="0">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary">Submit Test Results</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 data-translate="education_title">Health Education & Prevention</h1>
+                    <p data-translate="education_subtitle">Learn about water-borne diseases and prevention methods</p>
+                </div>
+
+                <div class="education-grid">
+                    <div class="education-card">
+                        <div class="card-icon">🚰</div>
+                        <h3 data-translate="water_safety">Water Safety</h3>
+                        <p>Learn proper water purification methods and safe drinking practices.</p>
+                        <button class="btn-outline" onclick="openEducationModal('water-safety')">Learn More</button>
+                    </div>
+
+                    <div class="education-card">
+                        <div class="card-icon">🧼</div>
+                        <h3 data-translate="hygiene">Hygiene Practices</h3>
+                        <p>Essential hygiene practices to prevent water-borne diseases.</p>
+                        <button class="btn-outline" onclick="openEducationModal('hygiene')">Learn More</button>
+                    </div>
+
+                    <div class="education-card">
+                        <div class="card-icon">🏥</div>
+                        <h3 data-translate="symptoms_guide">Symptom Recognition</h3>
+                        <p>Identify early symptoms of water-borne diseases and when to seek help.</p>
+                        <button class="btn-outline" onclick="openEducationModal('symptoms')">Learn More</button>
+                    </div>
+
+                    <div class="education-card">
+                        <div class="card-icon">🌧️</div>
+                        <h3 data-translate="monsoon_prep">Monsoon Preparation</h3>
+                        <p>Special precautions during monsoon season to prevent disease outbreaks.</p>
+                        <button class="btn-outline" onclick="openEducationModal('monsoon')">Learn More</button>
+                    </div>
+                </div>
+
+                <div class="video-section">
+                    <h3 data-translate="video_tutorials">Video Tutorials</h3>
+                    <div class="video-grid">
+                        <div class="video-card">
+                            <div class="video-thumbnail">
+                                <div class="play-button">▶️</div>
+                                <img src="https://images.pexels.com/photos/416528/pexels-photo-416528.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Water purification">
+                            </div>
+                            <h4>Home Water Purification</h4>
+                            <p>5 minutes • Assamese</p>
+                        </div>
+                        <div class="video-card">
+                            <div class="video-thumbnail">
+                                <div class="play-button">▶️</div>
+                                <img src="https://images.pexels.com/photos/3902882/pexels-photo-3902882.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Handwashing">
+                            </div>
+                            <h4>Proper Handwashing</h4>
+                            <p>3 minutes • Bengali</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Alerts Section -->
+        <section id="alerts" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 data-translate="alerts_title">Health Alerts & Notifications</h1>
+                    <p data-translate="alerts_subtitle">Current health alerts and early warning notifications</p>
+                </div>
+
+                <div class="alerts-container">
+                    <div class="alert-item critical">
+                        <div class="alert-header">
+                            <div class="alert-level">🚨 Critical Alert</div>
+                            <div class="alert-time">2 hours ago</div>
+                        </div>
+                        <h3>Cholera Outbreak Detected - Dibrugarh District</h3>
+                        <p>Multiple cases of cholera have been confirmed in Dibrugarh district. Immediate medical attention required for anyone experiencing severe diarrhea and vomiting.</p>
+                        <div class="alert-actions">
+                            <button class="btn-primary">View Details</button>
+                            <button class="btn-outline">Share Alert</button>
+                        </div>
+                    </div>
+
+                    <div class="alert-item warning">
+                        <div class="alert-header">
+                            <div class="alert-level">⚠️ Warning</div>
+                            <div class="alert-time">6 hours ago</div>
+                        </div>
+                        <h3>Water Contamination Risk - Jorhat Area</h3>
+                        <p>Elevated bacterial levels detected in community water sources. Residents advised to boil water before consumption.</p>
+                        <div class="alert-actions">
+                            <button class="btn-primary">View Details</button>
+                            <button class="btn-outline">Share Alert</button>
+                        </div>
+                    </div>
+
+                    <div class="alert-item info">
+                        <div class="alert-header">
+                            <div class="alert-level">ℹ️ Information</div>
+                            <div class="alert-time">1 day ago</div>
+                        </div>
+                        <h3>Monsoon Health Preparedness Campaign</h3>
+                        <p>Annual health preparedness campaign begins next week. Free health check-ups and water testing kits available at community centers.</p>
+                        <div class="alert-actions">
+                            <button class="btn-primary">Learn More</button>
+                            <button class="btn-outline">Register</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert-subscription">
+                    <h3>Alert Notifications</h3>
+                    <p>Subscribe to receive health alerts via SMS or WhatsApp</p>
+                    <form class="subscription-form">
+                        <div class="form-group">
+                            <input type="tel" placeholder="Enter your phone number" required>
+                        </div>
+                        <div class="form-group">
+                            <select required>
+                                <option value="">Select notification method</option>
+                                <option value="sms">SMS</option>
+                                <option value="whatsapp">WhatsApp</option>
+                                <option value="both">Both</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="educationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Education Content</h2>
+                <span class="modal-close">&times;</span>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div id="successMessage" class="success-message">
+        <div class="success-content">
+            <span class="success-icon">✅</span>
+            <span id="successText">Report submitted successfully!</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
